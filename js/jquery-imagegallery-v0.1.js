@@ -11,6 +11,8 @@ $.fn.lookbooky = function(options) {
 		slidesSelector: '.lookbook-slide',
 		linksSelector: '.lookbook-links',
 		slideAnimationTimeout: 500,
+		slideContainerWidth: 961,
+		slideContainerHeight: 638,
 		analyzer: {
 			createPageElementTag: function(cmCatId, cmCategory, attributes){
 				console.log(pageid, categoryid);
@@ -31,10 +33,16 @@ $.fn.lookbooky = function(options) {
 
 		_this.arrowLeft = null;
 		_this.arrowRight = null;
+
+		_this.addLookbookyClasses = function(){
+			_this.addClass('lookbooky-container');
+			_slides.addClass('lookbooky-slide');
+			_slides.eq(0).addClass('lookbooky-slide-first');
+		};
 		
 		//return Current slide
 		_this.getCurrentSlide = function(){
-			return _this.attr('data-current-slide') || 0;
+			return parseInt(_this.attr('data-current-slide')) || 0;
 		};
 
 		_this.setCurrentSlide = function(newCurrentSlide){
@@ -99,15 +107,16 @@ $.fn.lookbooky = function(options) {
 
 		_this.moveNextSlide = function(){
 			var _currentSlide = _this.getCurrentSlide();
-			_this.goToSlide(_currentSlide++);
+			_this.goToSlide(_currentSlide+1);
 		};
 
 		_this.movePreviousSlide = function(){
 			var _currentSlide = _this.getCurrentSlide();
-			_this.goToSlide(_currentSlide--);
+			_this.goToSlide(_currentSlide-1);
 		};
 
 		_this.goToSlide = function(newCurrentSlide, animated){
+
 			//set true as default parameter
 			animated = typeof animated === 'boolean' ? animated : true;
 			var _currentSlide = _this.getCurrentSlide();
@@ -115,34 +124,48 @@ $.fn.lookbooky = function(options) {
 			_this.animateSlide(_currentSlide, _this.getCurrentSlide(), animated);
 		}
 
-		_this.animateSlide = function(slideFrom, slideTo, animated){
+		_this.animateSlide = function(slideFromNumber, slideToNumber, animated){
+
 			//animation timeout
-			var animationTimeout = animated === true ? slideAnimationTimeout : 0;
+			var animationTimeout = animated === true ? settings.slideAnimationTimeout : 0;
+
+			var slideFrom = _slides.eq(slideFromNumber);
+			var slideTo = _slides.eq(slideToNumber);
+
+			var slideFromLeft = 0;
+			var slideToLeft = 0;
 
 			//equals
-			if ( slideFrom === slideTo ){
+			if ( slideFromNumber === slideToNumber ){
 				return;
 			}
 			//move to left
-			else if ( slideFrom > slideTo){
-
+			else if ( slideFromNumber < slideToNumber){
+				slideTo.css('left', slideFrom.width());
+				var slideFromLeft = slideFrom.width() * -1;
+				var slideToLeft = 0;
 			}
 			//move to right
 			else{
-
+				slideTo.css('left', slideFrom.width() * -1);
+				var slideFromLeft = slideFrom.width();
+				var slideToLeft = 0;
 			}
+
+			slideTo.animate({
+				left: slideToLeft
+			}, { duration: animationTimeout, queue: false });
+
+			slideFrom.animate({
+				left: slideFromLeft
+			}, { duration: animationTimeout, queue: false });
+
 		};
-
 		
-
+		_this.addLookbookyClasses();
 		_this.createArrows();
 		_this.createArrowsListeners();
 		_this.createLinkListeners();
-
-		
-
-		
-
 
 	});
 

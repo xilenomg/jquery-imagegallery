@@ -1,0 +1,39 @@
+.lookbooky-container{
+	position: relative;
+	overflow: hidden;
+	width: 961px;
+	height: 638px;
+	margin: 0px;
+	background-color: #fff;
+	float: left;
+}
+
+.lookbooky-slide{
+	display: block;
+	position: absolute;
+	left: 961px;
+	width: 961px;
+	height: 638px;
+}
+
+.lookbooky-slide-first{
+	left: 0px;
+}
+
+
+.arrow-left, .arrow-right {
+	position: absolute;
+	float: left;
+	top: 50%;
+	margin-top: -40px;
+	width: 24px;
+	height: 73px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.arrow-left {
+	left: 0px;
+}
+.arrow-right {
+	right: 0px;
+}
