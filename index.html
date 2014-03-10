@@ -5,51 +5,53 @@
 		<script src="js/jquery-imagegallery-v0.1.js"></script>
 		<script>
 		$(document).ready(function(){
-			$(".lookbook").lookbooky();
+			$("#lookbook1").lookbooky({lookbookName: 'top-tees-1'});
+			$("#lookbook2").lookbooky({lookbookName: 'top-tees-2'});
+			
 		});
 		</script>
 	</head>
 	<body>
 		<div id="lookbook1" class="lookbook">
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page1">
 				<img src="img/image1.jpg" usemap="#imagemap1" />
 				<map id="imagemap1" name="imagemap1">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page1-onclick"  data-coremetrics-onhover="page1-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page2">
 				<img src="img/image2.jpg" usemap="#imagemap2" />
 				<map id="imagemap2" name="imagemap2">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page2-onclick"  data-coremetrics-onhover="page2-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page3">
 				<img src="img/image3.jpg" usemap="#imagemap3" />
 				<map id="imagemap3" name="imagemap3">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page3-onclick"  data-coremetrics-onhover="page3-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page4">
 				<img src="img/image4.jpg" usemap="#imagemap4" />
 				<map id="imagemap4" name="imagemap4">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page4-onclick"  data-coremetrics-onhover="page4-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page5">
 				<img src="img/image5.jpg" usemap="#imagemap5" />
 				<map id="imagemap5" name="imagemap5">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page6">
 				<img src="img/image6.jpg" usemap="#imagemap6" />
 				<map id="imagemap6" name="imagemap6">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page6-onclick"  data-coremetrics-onhover="page6-onhover">
 				</map>
 			</div>
 		</div>
@@ -57,32 +59,32 @@
 		<hr />
 
 		<div id="lookbook2" class="lookbook">
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page21">
 				<img src="img/image1.jpg" usemap="#imagemap21" />
 				<map id="imagemap21" name="imagemap21">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page21-onclick"  data-coremetrics-onhover="page21-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page22">
 				<img src="img/image2.jpg" usemap="#imagemap22" />
 				<map id="imagemap22" name="imagemap22">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page22-onclick"  data-coremetrics-onhover="page22-onhover">
 				</map>
 			</div>
 
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page23">
 				<img src="img/image5.jpg" usemap="#imagemap25" />
 				<map id="imagemap25" name="imagemap25">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page23-onclick"  data-coremetrics-onhover="page23-onhover">
 				</map>
 			</div>
 
-			<div class="lookbook-slide" data-coremetrics-onload="">
+			<div class="lookbook-slide" data-coremetrics-onload="page24">
 				<img src="img/image6.jpg" usemap="#imagemap26" />
 				<map id="imagemap26" name="imagemap26">
-					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick=""  data-coremetrics-onhover="">
+					<area shape="rect" class="lookbook-links lookbook-onclick lookbook-onhover" coords="0,0,961,592" href="#" id="#" data-coremetrics-onclick="page24-onclick"  data-coremetrics-onhover="page24-onhover">
 				</map>
 			</div>
 		</div>

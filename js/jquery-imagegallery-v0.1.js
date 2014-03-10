@@ -15,10 +15,10 @@ $.fn.lookbooky = function(options) {
 		slideContainerHeight: 638,
 		analyzer: {
 			createPageElementTag: function(cmCatId, cmCategory, attributes){
-				console.log(pageid, categoryid);
+				console.log('COREMETRICS: createPageElementTag',cmCatId, cmCategory, attributes);
 			},
 			cmCreatePageviewTag: function(cmPageID, cmCategoryID, searchTerm, searchResults){
-				console.log(cmPageID, cmCategoryID, searchTerm, searchResults);
+				console.log('COREMETRICS: cmCreatePageviewTag',cmPageID, cmCategoryID, searchTerm, searchResults);
 			}	
 		}
 	};
@@ -72,11 +72,13 @@ $.fn.lookbooky = function(options) {
 		_this.createArrowsListeners = function(){
 			//arrow LEFT on click listener
 			_this.arrowLeft.on('click', function(){
+				settings.analyzer.createPageElementTag(settings.lookbookName + '-arrow-left', settings.lookbookName);
 				_this.movePreviousSlide();
 			});
 
 			//arrow RIGHT on click listener
 			_this.arrowRight.on('click', function(){
+				settings.analyzer.createPageElementTag(settings.lookbookName + '-arrow-right', settings.lookbookName);
 				_this.moveNextSlide();
 			});
 		};
@@ -89,7 +91,7 @@ $.fn.lookbooky = function(options) {
 				var coremetricsOnClick = link.attr('data-coremetrics-click');
 				if ( coremetricsOnClick ){
 					//call analyzer createPageElementTag
-					analyzer.createPageElementTag(coremetricsOnClick, lookbookName);
+					settings.analyzer.createPageElementTag(coremetricsOnClick, settings.lookbookName);
 				}
 			});
 
@@ -100,7 +102,7 @@ $.fn.lookbooky = function(options) {
 				var coremetricsOnHover = link.attr('data-coremetrics-click');
 				if ( coremetricsOnHover ){
 					//call analyzer createPageElementTag
-					analyzer.createPageElementTag(coremetricsOnHover, lookbookName);
+					settings.analyzer.createPageElementTag(coremetricsOnHover, settings.lookbookName);
 				}
 			});
 		};
@@ -115,12 +117,22 @@ $.fn.lookbooky = function(options) {
 			_this.goToSlide(_currentSlide-1);
 		};
 
+		_this.fireAnalyzerPage = function(slideNumber){
+			var slide = _slides.eq(slideNumber);
+			var coremetricsOnLoad = slide.attr('data-coremetrics-onload');
+			if ( coremetricsOnLoad ){
+				//call analyzer cmCreatePageviewTag
+				settings.analyzer.cmCreatePageviewTag(coremetricsOnLoad, settings.lookbookName);
+			}
+		};
+
 		_this.goToSlide = function(newCurrentSlide, animated){
 
 			//set true as default parameter
 			animated = typeof animated === 'boolean' ? animated : true;
 			var _currentSlide = _this.getCurrentSlide();
 			_this.setCurrentSlide(newCurrentSlide);
+			_this.fireAnalyzerPage(_this.getCurrentSlide());
 			_this.animateSlide(_currentSlide, _this.getCurrentSlide(), animated);
 		}
 
@@ -161,11 +173,21 @@ $.fn.lookbooky = function(options) {
 			}, { duration: animationTimeout, queue: false });
 
 		};
+
+		_this.initialize = function(){
+			_this.addLookbookyClasses();
+			_this.createArrows();
+			_this.createArrowsListeners();
+			_this.createLinkListeners();
+
+			var currentSlide = _this.getCurrentSlide();
+			_this.fireAnalyzerPage(currentSlide);
+		}
 		
-		_this.addLookbookyClasses();
-		_this.createArrows();
-		_this.createArrowsListeners();
-		_this.createLinkListeners();
+		_this.initialize();
+		
+
+
 
 	});
 
