@@ -36,8 +36,16 @@ $.fn.lookbooky = function(options) {
 
 		_this.addLookbookyClasses = function(){
 			_this.addClass('lookbooky-container');
-			_slides.addClass('lookbooky-slide');
+			_this.width(settings.slideContainerWidth);
+			_this.height(settings.slideContainerHeight);
+
+			_slides.addClass('lookbooky-slide')
+			_slides.width(settings.slideContainerWidth);
+			_slides.height(settings.slideContainerHeight);
+			_slides.css('left', settings.slideContainerWidth);
+
 			_slides.eq(0).addClass('lookbooky-slide-first');
+			_slides.eq(0).css('left', 0);
 		};
 		
 		//return Current slide
