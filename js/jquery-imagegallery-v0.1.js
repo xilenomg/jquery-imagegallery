@@ -13,6 +13,8 @@ $.fn.lookbooky = function(options) {
 		slideAnimationTimeout: 500,
 		slideContainerWidth: 961,
 		slideContainerHeight: 638,
+		pushState: {},
+		pushStateSeparator: '-',
 		analyzer: {
 			createPageElementTag: function(cmCatId, cmCategory, attributes){
 				console.log('COREMETRICS: createPageElementTag',cmCatId, cmCategory, attributes);
@@ -142,12 +144,13 @@ $.fn.lookbooky = function(options) {
 			_this.setCurrentSlide(newCurrentSlide);
 			_this.fireAnalyzerPage(_this.getCurrentSlide());
 			_this.animateSlide(_currentSlide, _this.getCurrentSlide(), animated);
+			_this.updatePushState(_currentSlide);
 		}
 
 		_this.animateSlide = function(slideFromNumber, slideToNumber, animated){
 
 			//animation timeout
-			var animationTimeout = animated === true ? settings.slideAnimationTimeout : 0;
+			var animationTimeout = animated === true ? settings.slideAnimationTimeout : 1;
 
 			var slideFrom = _slides.eq(slideFromNumber);
 			var slideTo = _slides.eq(slideToNumber);
@@ -182,7 +185,78 @@ $.fn.lookbooky = function(options) {
 
 		};
 
+		//push state
+		_this.readPushState = function(){
+			var hash = document.location.hash;
+			//has pushState set up
+			if ( !jQuery.isEmptyObject(settings.pushState) ){
+				//has lookbook name on hash
+				if ( hash.indexOf(settings.lookbookName + settings.pushStateSeparator) === 1 ) {
+					//verify slide name
+						var slideName = getSlideNameByHash(hash);
+						//get slide number
+						var slideNumber = getSlideNumberByPushState(slideName);
+						//go to the slide without animation
+						_this.goToSlide(slideNumber, false);
+				}
+				
+			}
+
+		};
+
+		_this.updatePushState = function(){
+			var slideNumber = _this.getCurrentSlide();
+
+			//has pushState set up
+			if ( !jQuery.isEmptyObject(settings.pushState) ){
+				
+				//verify slide name
+				var slideName = getSlideNameByNumber(slideNumber);
+				if ( slideName ){
+					//go to the slide without animation
+					document.location.hash =  settings.lookbookName + settings.pushStateSeparator + slideName;
+				}	
+	
+			}
+		};
+
+		var getSlideNumberByPushState = function(slideName){
+			var slideNumberMap = $.map(settings.pushState,function(value, key){
+				if ( value === slideName ){
+					return key;
+				}
+			});
+
+			if ( slideNumberMap.length >= 0 ){
+				return parseInt(slideNumberMap[0]) || 0;
+			}
+
+			return 0;
+		};
+
+		var getSlideNameByHash = function(hash){
+
+			//It's 1 because of #, lookbook name length and push state separator
+			return hash.substring(1 + settings.lookbookName.length + settings.pushStateSeparator.length);
+		};
+
+		var getSlideNameByNumber = function(number){
+			var slideValueMap = $.map(settings.pushState,function(value, key){
+				if ( key === number + '' ){
+					return value;
+				}
+			});
+
+			if ( slideValueMap.length >= 0 ){
+				return slideValueMap[0] || null;
+			}
+
+			return null;
+		};
+
+		//initialize
 		_this.initialize = function(){
+			_this.readPushState();
 			_this.addLookbookyClasses();
 			_this.createArrows();
 			_this.createArrowsListeners();

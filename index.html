@@ -5,8 +5,19 @@
 		<script src="js/jquery-imagegallery-v0.1.js"></script>
 		<script>
 		$(document).ready(function(){
-			$("#lookbook1").lookbooky({lookbookName: 'top-tees-1'});
-			$("#lookbook2").lookbooky({lookbookName: 'top-tees-2'});
+			$("#lookbook1").lookbooky(
+				{
+					lookbookName: 'top-tees-1', pushState:{
+															0:'slide-1',
+															1:'slide-2',
+															2:'slide-3',
+															3:'slide-4',
+															4:'slide-5',
+															5:'slide-6'
+														  }
+				}
+			);
+			$("#lookbook2").lookbooky({lookbookName: 'top-tees-12'});
 			
 		});
 		</script>
