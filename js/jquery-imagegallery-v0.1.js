@@ -91,6 +91,10 @@ $.fn.lookbooky = function(options) {
 				settings.analyzer.createPageElementTag(settings.lookbookName + '-arrow-right', settings.lookbookName);
 				_this.moveNextSlide();
 			});
+
+			$(window).on('hashchange', function(){
+				_this.readPushState();
+			});
 		};
 
 		_this.createLinkListeners = function(){
