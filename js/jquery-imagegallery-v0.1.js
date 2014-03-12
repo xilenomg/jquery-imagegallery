@@ -1,26 +1,44 @@
 /**
 Created by Luis Felipe Corrêa Pérez to solve issues for BloomingDales.com
++55 (31) 8334-6577
 How to use:
 */
 $.fn.lookbooky = function(options) {
 
 	var defaultSettings = {
+		//lookbook name will be used by Analyzer ( Coremetrics )
 		lookbookName: 'lookbook-name',
+		//define image for left Arrow
 		arrowLeftImage: 'img/arrow-left.png',
+		//define image for right Arrow
 		arrowRightImage: 'img/arrow-right.png',
+		//jquery selector for slides
 		slidesSelector: '.lookbook-slide',
+		//jquery selector for links. ( We use it to call analyzer ( Coremetrics ) if they have data-coremetrics-onclick or data-coremetrics-onhover attribute)
 		linksSelector: '.lookbook-links',
+		//jquery selector for pagination number image
+		paginatonNumberSelector: '.lookbook-pagination-img',
+		//jquery selector from pagination marker image
+		paginationMarkerSelector: '.lookbook-pagination-marker',
+		//jquery selector for area on map into pagination div
+		paginationLinksSelector: '.lookbook-pagination map area',
+		//slide animation timeout
 		slideAnimationTimeout: 500,
+		//container/slide width
 		slideContainerWidth: 961,
+		//container/slide height
 		slideContainerHeight: 638,
+		//push state values for slides. {0:'slide-pushstate-name', 1: 'slide-pushstate-name'}. Must be used with lookbookName + lookbookSeparator + pushstate value.
 		pushState: {},
+		//push state separator between lookbook name and pushstate value
 		pushStateSeparator: '-',
+		//interface for any analyzer based on coremetrics code. Can be customized must contain createPageElementTag and createPageviewTag
 		analyzer: {
 			createPageElementTag: function(cmCatId, cmCategory, attributes){
 				console.log('COREMETRICS: createPageElementTag',cmCatId, cmCategory, attributes);
 			},
-			cmCreatePageviewTag: function(cmPageID, cmCategoryID, searchTerm, searchResults){
-				console.log('COREMETRICS: cmCreatePageviewTag',cmPageID, cmCategoryID, searchTerm, searchResults);
+			createPageviewTag: function(cmPageID, cmCategoryID, searchTerm, searchResults){
+				console.log('COREMETRICS: createPageviewTag',cmPageID, cmCategoryID, searchTerm, searchResults);
 			}	
 		}
 	};
@@ -33,6 +51,11 @@ $.fn.lookbooky = function(options) {
 		var _slides = _this.find(settings.slidesSelector);
 		var _links = _this.find(settings.linksSelector);
 
+		//pagination
+		var _paginationNumber = _this.find(settings.paginatonNumberSelector);
+		var _paginationMarker = _this.find(settings.paginationMarkerSelector);
+
+		//arrows
 		_this.arrowLeft = null;
 		_this.arrowRight = null;
 
@@ -49,7 +72,7 @@ $.fn.lookbooky = function(options) {
 			_slides.eq(0).addClass('lookbooky-slide-first');
 			_slides.eq(0).css('left', 0);
 		};
-		
+
 		//return Current slide
 		_this.getCurrentSlide = function(){
 			return parseInt(_this.attr('data-current-slide')) || 0;
@@ -91,18 +114,18 @@ $.fn.lookbooky = function(options) {
 				settings.analyzer.createPageElementTag(settings.lookbookName + '-arrow-right', settings.lookbookName);
 				_this.moveNextSlide();
 			});
-
-			$(window).on('hashchange', function(){
-				_this.readPushState();
-			});
 		};
 
 		_this.createLinkListeners = function(){
+			$(window).on('hashchange', function(){
+				_this.readPushState();
+			});
+
 			//links On click event - fire coremetrics attr
 			_this.on('click', settings.linksSelector, function(event){
 				var link = $(this);
 
-				var coremetricsOnClick = link.attr('data-coremetrics-click');
+				var coremetricsOnClick = link.attr('data-coremetrics-onclick');
 				if ( coremetricsOnClick ){
 					//call analyzer createPageElementTag
 					settings.analyzer.createPageElementTag(coremetricsOnClick, settings.lookbookName);
@@ -110,14 +133,21 @@ $.fn.lookbooky = function(options) {
 			});
 
 			//links On hover event - fire coremetrics attr
-			_this.on('hover', settings.linksSelector, function(event){
+			_this.on('mouseover', settings.linksSelector, function(event){
 				var link = $(this);
 
-				var coremetricsOnHover = link.attr('data-coremetrics-click');
+				var coremetricsOnHover = link.attr('data-coremetrics-onhover');
 				if ( coremetricsOnHover ){
 					//call analyzer createPageElementTag
 					settings.analyzer.createPageElementTag(coremetricsOnHover, settings.lookbookName);
 				}
+			});
+
+			_this.on('click', settings.paginationLinksSelector, function(event){
+				event.preventDefault();
+				var paginationIndex = $(settings.paginationLinksSelector).index(this);
+				settings.analyzer.createPageElementTag('topnav-' + paginationIndex, settings.lookbookName);
+				_this.goToSlide(paginationIndex);
 			});
 		};
 
@@ -135,8 +165,8 @@ $.fn.lookbooky = function(options) {
 			var slide = _slides.eq(slideNumber);
 			var coremetricsOnLoad = slide.attr('data-coremetrics-onload');
 			if ( coremetricsOnLoad ){
-				//call analyzer cmCreatePageviewTag
-				settings.analyzer.cmCreatePageviewTag(coremetricsOnLoad, settings.lookbookName);
+				//call analyzer createPageviewTag
+				settings.analyzer.createPageviewTag(coremetricsOnLoad, settings.lookbookName);
 			}
 		};
 
@@ -187,6 +217,20 @@ $.fn.lookbooky = function(options) {
 				left: slideFromLeft
 			}, { duration: animationTimeout, queue: false });
 
+			_this.animatePaginationMarker(slideToNumber, animated);
+		};
+
+
+		
+		_this.animatePaginationMarker = function(slideToNumber, animated){
+			//animation timeout
+			var animationTimeout = animated === true ? settings.slideAnimationTimeout : 1;
+
+			var slideToPagePosition = settings.paginationMarkerPosition[slideToNumber];
+
+			_paginationMarker.animate({
+				left: slideToPagePosition
+			}, { duration: animationTimeout, queue: false });
 		};
 
 		//push state
@@ -245,17 +289,9 @@ $.fn.lookbooky = function(options) {
 		};
 
 		var getSlideNameByNumber = function(number){
-			var slideValueMap = $.map(settings.pushState,function(value, key){
-				if ( key === number + '' ){
-					return value;
-				}
-			});
 
-			if ( slideValueMap.length >= 0 ){
-				return slideValueMap[0] || null;
-			}
-
-			return null;
+			return settings.pushState[number];
+	
 		};
 
 		//initialize
