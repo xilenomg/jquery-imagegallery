@@ -22,6 +22,8 @@ $.fn.lookbooky = function(options) {
 		paginationMarkerSelector: '.lookbook-pagination-marker',
 		//jquery selector for area on map into pagination div
 		paginationLinksSelector: '.lookbook-pagination map area',
+		//prefix to be added when user clicks on page number
+		paginationAnalizerPrefix: 'topnav-',
 		//slide animation timeout
 		slideAnimationTimeout: 500,
 		//container/slide width
@@ -146,7 +148,7 @@ $.fn.lookbooky = function(options) {
 			_this.on('click', settings.paginationLinksSelector, function(event){
 				event.preventDefault();
 				var paginationIndex = $(settings.paginationLinksSelector).index(this);
-				settings.analyzer.createPageElementTag('topnav-' + paginationIndex, settings.lookbookName);
+				settings.analyzer.createPageElementTag(settings.paginationAnalizerPrefix + (paginationIndex + 1), settings.lookbookName);
 				_this.goToSlide(paginationIndex);
 			});
 		};
