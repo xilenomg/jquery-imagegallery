@@ -124,9 +124,11 @@ $.fn.lookbooky = function(options) {
 				var slideName = getSlideNameByHash(hash);
 				//get slide number
 				var slideNumber = getSlideNumberByPushState(slideName);
-				if ( slideNumber  ){
+				if ( !isNaN(slideNumber)  ){
 					//go to the slide without animation
+					console.log(slideNumber);
 					_this.goToSlide(slideNumber, true);
+					_this.fireAnalyzerPage(_this.getCurrentSlide());
 				}
 			});
 
@@ -185,7 +187,7 @@ $.fn.lookbooky = function(options) {
 			animated = typeof animated === 'boolean' ? animated : true;
 			var _currentSlide = _this.getCurrentSlide();
 			_this.setCurrentSlide(newCurrentSlide);
-			_this.fireAnalyzerPage(_this.getCurrentSlide());
+			//_this.fireAnalyzerPage(_this.getCurrentSlide());
 			_this.animateSlide(_currentSlide, _this.getCurrentSlide(), animated);
 			_this.updatePushState(_currentSlide);
 		}
@@ -285,7 +287,11 @@ $.fn.lookbooky = function(options) {
 			});
 
 			if ( slideNumberMap.length > 0 ){
-				return parseInt(slideNumberMap[0]) || null;
+				var intNumber = parseInt(slideNumberMap[0]);
+				if ( !isNaN(intNumber) ){
+					return  intNumber;
+				}
+				return null;
 			}
 
 			return null;
