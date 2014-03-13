@@ -120,7 +120,14 @@ $.fn.lookbooky = function(options) {
 
 		_this.createLinkListeners = function(){
 			$(window).on('hashchange', function(){
-				_this.readPushState();
+				var hash = document.location.hash;
+				var slideName = getSlideNameByHash(hash);
+				//get slide number
+				var slideNumber = getSlideNumberByPushState(slideName);
+				if ( slideNumber  ){
+					//go to the slide without animation
+					_this.goToSlide(slideNumber, true);
+				}
 			});
 
 			//links On click event - fire coremetrics attr
@@ -277,11 +284,11 @@ $.fn.lookbooky = function(options) {
 				}
 			});
 
-			if ( slideNumberMap.length >= 0 ){
-				return parseInt(slideNumberMap[0]) || 0;
+			if ( slideNumberMap.length > 0 ){
+				return parseInt(slideNumberMap[0]) || null;
 			}
 
-			return 0;
+			return null;
 		};
 
 		var getSlideNameByHash = function(hash){

@@ -3,7 +3,7 @@
 */
 
 .lookbook{
-	padding-top: 40px;
+	padding-top: 22px;
 }
 
 .lookbook-pagination{
@@ -20,4 +20,16 @@
 	z-index: 1;
 	top: 3px;
 	left: 3px;
+}
+
+.lookbooky-container .lookbook-pagination{
+	left: 50%;
+	margin-left: -112px;
+	width: 224px;
+}
+
+.shop-all{
+	position: absolute;
+	right: 0px;
+	top: 0px;
 }
