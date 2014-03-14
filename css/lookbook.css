@@ -33,3 +33,34 @@
 	right: 0px;
 	top: 0px;
 }
+
+.copy{
+	position: absolute;
+	top: 54px;
+	left: 125px;
+	width: 416px;
+	background: url('../img/copy-background.png') no-repeat center center;
+	height: 492px;
+	display: none;
+}
+
+.copy-dressed-to-fete{
+	position: absolute;
+	top: 76px;
+	left: 90px;
+	display: none;
+}
+
+.copy-spring-2014{
+	position: absolute;
+	top: 274px;
+	left: 142px;
+	display: none;
+}
+
+.copy-text{
+	position: absolute;
+	top: 330px;
+	left: 69px;
+	display: none;
+}
