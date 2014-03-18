@@ -12,6 +12,25 @@
 					slideContainerWidth: 962, 
 					slideContainerHeight: 595, 
 					paginationAnalizerPrefix: 'pagination-',
+					social:{
+						facebook:{ 
+							appId: '145634995501895',
+							title: 'Dressed to Fête: Spring 2014 | bloomingdales.com',
+							summary: 'Expand your party repertoire with spring’s crisp whites, artful prints and timeless silhouettes that set a new best-dressed benchmark.',
+							link: 'http://www.bloomingdales.com/fashion-index/dress_lookbook_spring14.jsp',
+							image: 'http://netstorage.bloomingdales.com/netstorage/media/dresslookbook14/fb.jpg',
+							redirectUri: 'http://www.facebook.com'
+						},
+						pinterest:{
+							title:'Dressed to Fête: Spring 2014 | bloomingdales.com',
+							description:'Expand your party repertoire with spring’s crisp whites, artful prints and timeless silhouettes that set a new best-dressed benchmark.',
+							image:'http://netstorage.bloomingdales.com/netstorage/media/dresslookbook14/pin.jpg'
+						},
+						twitter:{
+							text: 'Rise to the occasion with dresses in crisp whites, artful prints and timeless silhouettes  @bloomingdales.com',
+							link:'http://bit.ly/s14_dress_lookbook'
+						}
+					},
 					pushState:{
 								0:'slide-1',
 								1:'slide-2',
@@ -42,7 +61,7 @@
 	<body>
 		<div id="lookbook1" class="lookbook">
 			<div class="shop-all">
-				<a href="#" class="lookbook-links" data-coremetrics-onclick="shop_all" >
+				<a href="/shop/dress-to-fete?id=1002604" class="lookbook-links" data-coremetrics-onclick="shop_all" >
 					<img src="img/shop-all.png" class="lookbook-links" />
 				</a>
 			</div>
@@ -60,10 +79,20 @@
 					<area shape="rect" coords="203,0,220,30" href="#">
 				</map>
 			</div>
+			
+			<div class="social">
+				<img src="img/social.png" usemap="#imagemapsocial" />
+				<map id="imagemapsocial" name="imagemapsocial">
+					<area  shape="rect" class="social_fb lookbook-links" coords="0,0,18,18" data-coremetrics-onclick="social-fb" href="#" 	/>
+					<area  shape="rect" class="social_tw lookbook-links" coords="31,0,50,18" data-coremetrics-onclick="social-twitter" href="#" />
+					<area  shape="rect" class="social_pin lookbook-links" coords="64,0,83,18" data-coremetrics-onclick="social-pinterest" href="#" />
+				</map>
+			</div>
+
 			<div class="lookbook-slide" data-coremetrics-onload="page1">
 				<img src="img/image1.jpg" usemap="#imagemap1" />
 				<map id="imagemap1" name="imagemap1">
-					<area shape="rect" class="lookbook-links" coords="615,4,830,595" href="#" id="#" data-coremetrics-onclick="page1-onclick"  data-coremetrics-onhover="page1-onhover">
+					<area shape="rect" class="lookbook-links" coords="615,4,830,595" href="#spring14_dresses-slide-2" data-coremetrics-onclick="page1-onclick">
 				</map>
 
 				<div class="copy">
@@ -77,64 +106,64 @@
 				<img src="img/image2.jpg" usemap="#imagemap2" />
 				<map id="imagemap2" name="imagemap2">
 
-					<area  shape="rect" class="lookbook-links" coords="50,57,223,432" data-coremetrics-onclick="page2-onclick" target="_self" href="#1"     />
-					<area  shape="rect" class="lookbook-links" coords="435,72,608,447" data-coremetrics-onclick="page2-onclick" target="_self" href="#2"     />
-					<area  shape="rect" class="lookbook-links" coords="653,9,857,584" data-coremetrics-onclick="page2-onclick" target="_self" href="#3"     />
-					<area  shape="rect" class="lookbook-links" coords="29,457,199,492" data-coremetrics-onclick="page2-onclick" target="_self" href="#t1"     />
-					<area  shape="rect" class="lookbook-links" coords="29,499,199,534" data-coremetrics-onclick="page2-onclick" target="_self" href="#t2"     />
-					<area  shape="rect" class="lookbook-links" coords="30,538,200,573" data-coremetrics-onclick="page2-onclick" target="_self" href="#t3"     />
+					<area  shape="rect" class="lookbook-links" coords="50,57,223,432" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=1004970"     />
+					<area  shape="rect" class="lookbook-links" coords="435,72,608,447" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=975514"     />
+					<area  shape="rect" class="lookbook-links" coords="653,9,857,584" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=1004970"     />
+					<area  shape="rect" class="lookbook-links" coords="29,457,199,492" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=1004970"     />
+					<area  shape="rect" class="lookbook-links" coords="29,499,199,534" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=975514"     />
+					<area  shape="rect" class="lookbook-links" coords="30,538,200,573" data-coremetrics-onclick="page2-onclick" href="/catalog/product/index.ognc?ID=1004970"     />
 				</map>
 			</div>
 
 			<div class="lookbook-slide" data-coremetrics-onload="page3">
 				<img src="img/image3.jpg" usemap="#imagemap3" />
 				<map id="imagemap3" name="imagemap3">
-					<area shape="rect" class="lookbook-links" coords="421,8,694,571" href="#" id="#" data-coremetrics-onclick="page3-onclick"  data-coremetrics-onhover="page3-onhover">
+					<area shape="rect" class="lookbook-links" coords="421,8,694,571" href="/catalog/product/index.ognc?ID=1014935" data-coremetrics-onclick="page3-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="29,535,167,573" href="#" id="#" data-coremetrics-onclick="page3-onclick"  data-coremetrics-onhover="page3-onhover">
+					<area shape="rect" class="lookbook-links" coords="29,535,167,573" href="/catalog/product/index.ognc?ID=1014935" data-coremetrics-onclick="page3-onclick"  >
 				</map>
 			</div>
 
 			<div class="lookbook-slide" data-coremetrics-onload="page4">
 				<img src="img/image4.jpg" usemap="#imagemap4" />
 				<map id="imagemap4" name="imagemap4">
-					<area shape="rect" class="lookbook-links" coords="177,6,315,595" href="#" id="#" data-coremetrics-onclick="page4-onclick"  data-coremetrics-onhover="page4-onhover">
+					<area shape="rect" class="lookbook-links" coords="177,6,315,595" href="/catalog/product/index.ognc?ID=842719" data-coremetrics-onclick="page4-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="618,2,857,595" href="#" id="#" data-coremetrics-onclick="page4-onclick"  data-coremetrics-onhover="page4-onhover">
+					<area shape="rect" class="lookbook-links" coords="618,2,857,595" href="/catalog/product/index.ognc?ID=1014936" data-coremetrics-onclick="page4-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="19,520,155,571" href="#" id="#" data-coremetrics-onclick="page4-onclick"  data-coremetrics-onhover="page4-onhover">
+					<area shape="rect" class="lookbook-links" coords="19,520,155,571" href="/catalog/product/index.ognc?ID=842719" data-coremetrics-onclick="page4-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="427,537,592,572" href="#" id="#" data-coremetrics-onclick="page4-onclick"  data-coremetrics-onhover="page4-onhover">
+					<area shape="rect" class="lookbook-links" coords="427,537,592,572" href="/catalog/product/index.ognc?ID=1014936" data-coremetrics-onclick="page4-onclick"  >
 				</map>
 			</div>
 
 			<div class="lookbook-slide" data-coremetrics-onload="page5">
 				<img src="img/image5.jpg" usemap="#imagemap5" />
 				<map id="imagemap5" name="imagemap5">
-					<area shape="rect" class="lookbook-links" coords="110,34,249,421" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="110,34,249,421" href="/catalog/product/index.ognc?ID=1004951" data-coremetrics-onclick="page5-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="395,25,626,594" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="395,25,626,594" href="/catalog/product/index.ognc?ID=1014934" data-coremetrics-onclick="page5-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="734,63,864,550" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="734,63,864,550" href="/catalog/product/index.ognc?ID=1014939" data-coremetrics-onclick="page5-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="26,446,133,476" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="26,446,133,476" href="/catalog/product/index.ognc?ID=1004951" data-coremetrics-onclick="page5-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="29,489,143,519" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="29,489,143,519" href="/catalog/product/index.ognc?ID=1014934" data-coremetrics-onclick="page5-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="27,523,141,571" href="#" id="#" data-coremetrics-onclick="page5-onclick"  data-coremetrics-onhover="page5-onhover">
+					<area shape="rect" class="lookbook-links" coords="27,523,141,571" href="/catalog/product/index.ognc?ID=1014939" data-coremetrics-onclick="page5-onclick"  >
 				</map>
 			</div>
 
 			<div class="lookbook-slide" data-coremetrics-onload="page6">
 				<img src="img/image6.jpg" usemap="#imagemap6" />
 				<map id="imagemap6" name="imagemap6">
-					<area shape="rect" class="lookbook-links" coords="98,0,285,516" href="#" id="#" data-coremetrics-onclick="page6-onclick"  data-coremetrics-onhover="page6-onhover">
+					<area shape="rect" class="lookbook-links" coords="98,0,285,516" href="/catalog/product/index.ognc?ID=1014938" data-coremetrics-onclick="page6-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="578,43,765,574" href="#" id="#" data-coremetrics-onclick="page6-onclick"  data-coremetrics-onhover="page6-onhover">
+					<area shape="rect" class="lookbook-links" coords="578,43,765,574" href="/catalog/product/index.ognc?ID=988282" data-coremetrics-onclick="page6-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="24,537,153,571" href="#" id="#" data-coremetrics-onclick="page6-onclick"  data-coremetrics-onhover="page6-onhover">
+					<area shape="rect" class="lookbook-links" coords="24,537,153,571" href="/catalog/product/index.ognc?ID=1014938" data-coremetrics-onclick="page6-onclick"  >
 
-					<area shape="rect" class="lookbook-links" coords="431,538,560,572" href="#" id="#" data-coremetrics-onclick="page6-onclick"  data-coremetrics-onhover="page6-onhover">
+					<area shape="rect" class="lookbook-links" coords="431,538,560,572" href="/catalog/product/index.ognc?ID=988282" data-coremetrics-onclick="page6-onclick"  >
 				</map>
 			</div>
 		</div>

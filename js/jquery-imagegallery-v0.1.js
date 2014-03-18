@@ -24,6 +24,8 @@ $.fn.lookbooky = function(options) {
 		paginationLinksSelector: '.lookbook-pagination map area',
 		//prefix to be added when user clicks on page number
 		paginationAnalizerPrefix: 'topnav-',
+		hammerEnabled: false,
+		hammerSelector: '',
 		//slide animation timeout
 		slideAnimationTimeout: 500,
 		//container/slide width
@@ -34,13 +36,22 @@ $.fn.lookbooky = function(options) {
 		pushState: {},
 		//push state separator between lookbook name and pushstate value
 		pushStateSeparator: '-',
+		
+		facebookSelector:'.social_fb',
+		pinterestSelector:'.social_pin',
+		twitterSelector:'.social_tw',
+
 		//interface for any analyzer based on coremetrics code. Can be customized must contain createPageElementTag and createPageviewTag
 		analyzer: {
 			createPageElementTag: function(cmCatId, cmCategory, attributes){
-				console.log('COREMETRICS: createPageElementTag',cmCatId, cmCategory, attributes);
+				if ( console && console.log ){
+					console.log('COREMETRICS: createPageElementTag',cmCatId, cmCategory, attributes);
+				}
 			},
 			createPageviewTag: function(cmPageID, cmCategoryID, searchTerm, searchResults){
-				console.log('COREMETRICS: createPageviewTag',cmPageID, cmCategoryID, searchTerm, searchResults);
+				if ( console && console.log ){
+					console.log('COREMETRICS: createPageviewTag',cmPageID, cmCategoryID, searchTerm, searchResults);
+				}
 			}	
 		}
 	};
@@ -73,6 +84,53 @@ $.fn.lookbooky = function(options) {
 
 			_slides.eq(0).addClass('lookbooky-slide-first');
 			_slides.eq(0).css('left', 0);
+		};
+
+		_this.socialMedia = function(){
+			$(settings.facebookSelector).attr('href', createFacebookURL());
+			$(settings.pinterestSelector).attr('href', createPinterestURL());
+			$(settings.twitterSelector).attr('href', createTwitterURL());
+
+			$(settings.facebookSelector).attr('target', '_blank');
+			$(settings.pinterestSelector).attr('target', '_blank');
+			$(settings.twitterSelector).attr('target', '_blank');
+		};
+
+		var createFacebookURL = function(){
+			var facebookUrl = 'http://www.bloomingdales.com/aqua';
+			var facebookTitle = settings.social.facebook.title || '';
+			var facebookSummary = settings.social.facebook.summary || '';
+			var facebookLink = settings.social.facebook.link || '';
+			var facebookImage = settings.social.facebook.image || '';
+			var facebookRedirectUri = settings.social.facebook.redirectUri || '';
+
+			var facebookApiUrl = 'https://www.facebook.com/dialog/feed?';
+			facebookApiUrl += 'app_id=' + settings.social.facebook.appId;
+			facebookApiUrl += '&name=' + encodeURIComponent(facebookTitle).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+			facebookApiUrl += '&display=popup';
+			facebookApiUrl += '&description=' + encodeURIComponent(facebookSummary).replace(/[!'()]/g, escape).replace(/\*/g, "%2A") + ' ' + facebookUrl;
+			facebookApiUrl += '&picture=' + facebookImage;
+			facebookApiUrl += '&link=' + facebookLink;
+			facebookApiUrl += '&redirect_uri=' + facebookRedirectUri;
+			return facebookApiUrl;
+		};
+
+		var createPinterestURL = function(){
+			var pinterestApiUrl = 'http://pinterest.com/pin/create/button/';
+			var pinterestLink = settings.social.pinterest.link || '';
+			var pinterestSummary = settings.social.pinterest.link || '';
+			var pinterestImage = settings.social.pinterest.link || '';
+			
+			pinterestApiUrl += '?url=' + encodeURIComponent(pinterestLink).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+			pinterestApiUrl += '&description=' + encodeURIComponent(pinterestSummary).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+			return pinterestApiUrl += '&media=' + encodeURIComponent(pinterestImage).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+		};
+
+		var createTwitterURL = function(){
+			var twitterApiUrl = 'http://twitter.com/intent/tweet?source=webclient&text=';
+			var twitterText = settings.social.twitter.text || '';
+			var twitterLink = settings.social.twitter.link || '';
+			return twitterApiUrl += encodeURIComponent(twitterText + twitterLink).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
 		};
 
 		//return Current slide
@@ -126,7 +184,6 @@ $.fn.lookbooky = function(options) {
 				var slideNumber = getSlideNumberByPushState(slideName);
 				if ( !isNaN(slideNumber)  ){
 					//go to the slide without animation
-					console.log(slideNumber);
 					_this.goToSlide(slideNumber, true);
 					_this.fireAnalyzerPage(_this.getCurrentSlide());
 				}
@@ -304,9 +361,7 @@ $.fn.lookbooky = function(options) {
 		};
 
 		var getSlideNameByNumber = function(number){
-
 			return settings.pushState[number];
-	
 		};
 
 		//initialize
@@ -316,10 +371,31 @@ $.fn.lookbooky = function(options) {
 			_this.createArrows();
 			_this.createArrowsListeners();
 			_this.createLinkListeners();
+			_this.socialMedia();
+
+			if ( settings.hammerEnabled === true){
+				_this.setHammer();
+			}
 
 			var currentSlide = _this.getCurrentSlide();
 			_this.fireAnalyzerPage(currentSlide);
 		}
+
+		_this.setHammer = function(){
+			///TOUCHEVENTS Slide
+			if(BLOOMIES.isTouch){
+					//swipe left
+					Hammer(settings.hammerSelector).on("swiperight", function(){
+						settings.analyzer.createPageElementTag(settings.lookbookName + '-swipe-right', settings.lookbookName);
+						_this.movePreviousSlide();
+					});
+					//swipe right
+				   Hammer(settings.hammerSelector).on("swipeleft", function(){
+					   settings.analyzer.createPageElementTag(settings.lookbookName + '-swipe-left', settings.lookbookName);
+						_this.moveNextSlide();
+				   });
+			}
+		};
 		
 		_this.initialize();
 		

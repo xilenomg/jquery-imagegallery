@@ -64,3 +64,11 @@
 	left: 69px;
 	display: none;
 }
+
+.social{
+	position: absolute;
+	right: 20px;
+	bottom: 10px;
+	z-index: 1;
+}
+}
